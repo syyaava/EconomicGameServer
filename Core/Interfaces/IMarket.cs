@@ -9,7 +9,7 @@ namespace Core.Interfaces
 {
     public interface IMarket
     {
-        IEnumerable<Good> GetGoods(int count = 1);
-        void AddGoods(IEnumerable<Good> goodsToAdd);
+        IEnumerable<Lot> GetLots(int count = 1);
+        void AddLots(IEnumerable<Lot> goodsToAdd);
     }
 }

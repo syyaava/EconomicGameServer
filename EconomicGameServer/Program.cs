@@ -1,8 +1,12 @@
+using Core.Interfaces;
+using Core.market;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSingleton<IMarket, Market>();
 
 var app = builder.Build();
 
