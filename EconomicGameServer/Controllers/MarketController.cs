@@ -10,13 +10,11 @@ namespace EconomicGameServer.Controllers
     public class MarketController : ControllerBase
     {
         private const string PATH_TO_ITEMS = "Items";
-        private ILogger logger;
         private IMarket market;
         private List<Item> items = new List<Item>();
 
         public MarketController(IMarket market)
         {
-            this.logger = logger;
             this.market = market;
             LoadItems();
         }
@@ -43,8 +41,16 @@ namespace EconomicGameServer.Controllers
                 if (!items.Exists(x => x.Id == item.Item.Id))
                     return BadRequest(lotsToAdd);
             //TODO: добавить проверку на соответствие предметам
-            market.AddLots(lotsToAdd);
+            market.AddLots(lotsToAdd.ToArray());
             return Ok();
+        }
+
+        [HttpPost]
+        [Route("lots/buy")]
+        public IActionResult BuyLots(IEnumerable<Lot> lotsToAdd)
+        {
+            var purchasedLots = market.BuyLots(lotsToAdd.ToArray());
+            return Ok(purchasedLots);
         }
 
         private void LoadItems()

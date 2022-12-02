@@ -7,6 +7,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IMarket, Market>();
+builder.Services.AddSingleton<ILotContainer, Lots>();
 
 var app = builder.Build();
 

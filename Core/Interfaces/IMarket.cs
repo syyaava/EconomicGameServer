@@ -10,6 +10,7 @@ namespace Core.Interfaces
     public interface IMarket
     {
         IEnumerable<Lot> GetLots(int count = 1);
-        void AddLots(IEnumerable<Lot> goodsToAdd);
+        void AddLots(params Lot[] goodsToAdd);
+        IEnumerable<Lot> BuyLots(params Lot[] lotsToBuy);
     }
 }

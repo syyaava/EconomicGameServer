@@ -7,9 +7,12 @@
         public int Count { get; init;  }
         public Item Item { get; init; }
 
-        public Lot(Item item, float price, int count = 1)
+        public Lot(Item item, float price, string id = "", int count = 1)
         {
-            Id = Guid.NewGuid().ToString();
+            if(string.IsNullOrEmpty(id))
+                Id = Guid.NewGuid().ToString();
+            else
+                Id = id;
             Price = price;
             Count = count;
             Item = item;

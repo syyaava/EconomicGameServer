@@ -9,33 +9,39 @@ namespace Core.market
 {
     public class Market : IMarket
     {
-        private readonly List<Lot> lots;
+        private readonly ILotContainer lots;
 
-        public Market()
+        public Market(ILotContainer lotContainer)
         {
-            lots = LoadLots();
-            AddLots(new List<Lot>()
-            {
-                new Lot(new Item("Resources.Basic.Wood", "Wood", "Basic resource."), 12, 1)
-            });
+            lots = lotContainer;
         }
 
-        private List<Lot> LoadLots()
-        {
-            return new List<Lot>();
-        }
-
-        public void AddLots(IEnumerable<Lot> goodsToAdd)
+        public void AddLots(params Lot[] goodsToAdd)
         {
             if (goodsToAdd is null)
                 return;
 
-            lots.AddRange(goodsToAdd);
+            lots.AddLots(goodsToAdd);
         }
 
-        public IEnumerable<Lot> GetLots(int count = 1)
+        public IEnumerable<Lot> GetLots(int count = 5)
         {
-            return lots.TakeLast(count);
+            return lots.GetLots(count);
+        }
+
+        public IEnumerable<Lot> BuyLots(params Lot[] lotsToBuy)
+        {
+            var purchasedItems = new List<Lot>();
+            foreach(var lot in lotsToBuy)
+            {
+                if (lots.ExistsById(lot))
+                {
+                    lots.DeleteLots(lot);
+                    purchasedItems.Add(lot);
+                }
+            }
+
+            return purchasedItems;
         }
     }
 }
